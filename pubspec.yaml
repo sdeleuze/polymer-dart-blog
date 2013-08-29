@@ -1,0 +1,7 @@
+name: polymer_dart_blog
+description: A simple blog prototype, with OrientDB as Backend
+dependencies:
+  browser: any
+  polymer: any
+  start: any
+  http: any

@@ -1,0 +1,6 @@
+packages
+.DS_Store
+**/*.dart.js*
+.idea
+pubspec.lock
+.settings
