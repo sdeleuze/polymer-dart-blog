@@ -7,8 +7,9 @@ import 'dart:html';
 @CustomTag("x-blog")
 class BlogElement extends PolymerElement with ObservableMixin {
   
-  final Blog blog = new Blog();
-   
+  @observable
+  Blog blog = new Blog("Empty blog");
+    
   void created() {
     super.created();
     var root = getShadowRoot("x-blog");
@@ -17,14 +18,23 @@ class BlogElement extends PolymerElement with ObservableMixin {
     WebSocket ws = new WebSocket("ws://localhost:3000/socket");
     
     ws.onMessage.listen((MessageEvent e) {
-      print(e.data);
-      Post p = new Post.fromJson(e.data);
-      blog.posts.add(p);
+      RpcMessage m = new RpcMessage.fromJsonString(e.data);
       
+      switch(m.method) {
+        case RpcMessage.NOTIFY_NEW_POST:
+          Post p = new Post.fromJson(m.payload);
+          blog.posts.add(p);
+          break;
+        case RpcMessage.GET_BLOG_RESPONSE:
+          blog = new Blog.fromJson(m.payload);
+          print(blog.toString());
+          break;
+      }
     });
        
     ws.onOpen.listen((Event) {
       print("connection opened");
+      ws.send(RpcMessage.GET_BLOG_REQUEST);
     });
              
   }

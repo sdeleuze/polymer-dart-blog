@@ -7,6 +7,15 @@ class Blog {
   
   @observable
   List<Post> posts = toObservable(new List<Post>());
+  
+  Blog(this.title);
+  
+  Blog.fromJson(Map map) {
+    this.title = map['title'];
+    (map['posts'] as List).forEach((Map m) => this.posts.add(new Post.fromJson(m)));
+  }
+  
+  Map toJson() => {'title': title, 'posts': posts};
 }
 
 class Post {
@@ -15,20 +24,20 @@ class Post {
   DateTime created;
   User author;
   
-  Post(String title, String content) {
+  Post(String title, String content, User author) {
     created = new DateTime.now();
-    author = new User("Sébastien", "Deleuze");
     this.title = title;
-    this.content = content;    
+    this.content = content;
+    this.author = author;
+  }
+    
+  Post.fromJson(Map map) {
+    this.title = map['title'];
+    this.content = map['content'];
+    this.author = new User.fromJson(map['author']);
   }
   
-  Post.fromJson(String data) {
-    Map p = JSON.decode(data);
-    this.title = p['title'];
-    this.content = p['content'];
-  }
-  
-  Map toJson() => {'title': title, 'content': content};
+  Map toJson() => {'title': title, 'content': content, 'created': created.toString(), 'author': author};
   
 }
 
@@ -37,6 +46,35 @@ class User {
   String lastname;
   
   User(this.firstname, this.lastname);
+   
+  User.fromJson(Map map) {
+    this.firstname = map['firstname'];
+    this.lastname = map['lastname'];
+  }
   
-  String get name => "[firstName= $firstname, lastName= $lastname]";
+  String get name => "$firstname $lastname";
+  
+  Map toJson() => {'firstname': firstname, 'lastname': lastname};
+}
+
+class RpcMessage {
+  
+  static const GET_BLOG_REQUEST = "getBlogRequest";
+  static const GET_BLOG_RESPONSE = "getBlogResponse";
+  static const NOTIFY_NEW_POST = "notifyNewPost";
+    
+  String method;
+  var payload;
+  
+  RpcMessage(this.method, this.payload);
+  
+  RpcMessage.fromJsonString(String data) {
+    Map m = JSON.decode(data);
+    this.method = m['action'];
+    this.payload = m['payload'];
+  }
+  
+  Map toJson() => {'action': method, 'payload': payload};
+  
+  String toJsonString() => JSON.encode(this);
 }

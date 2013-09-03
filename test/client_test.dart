@@ -7,7 +7,7 @@ main() {
   test('Client simple test using dart:html', () {
     AnchorElement link = query('#example');
     link.href = 'http://dartlang.org/';
-    expect(query('#example').href, equals('http://dartlang.org/'));   
+    expect((query('#example') as AnchorElement).href, equals('http://dartlang.org/'));   
   });
   
   test('Test DOM node removal', () {

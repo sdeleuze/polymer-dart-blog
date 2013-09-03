@@ -5,3 +5,4 @@ dependencies:
   polymer: any
   start: any
   http: any
+  bootjack: any
