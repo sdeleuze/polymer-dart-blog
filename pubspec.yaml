@@ -6,3 +6,4 @@ dependencies:
   start: any
   http: any
   bootjack: any
+  intl: any

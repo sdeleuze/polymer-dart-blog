@@ -12,6 +12,8 @@ class BlogElement extends PolymerElement with ObservableMixin {
     
   void created() {
     super.created();
+    
+    // Use the global Bootstrap style
     var root = getShadowRoot("x-blog");
     root.applyAuthorStyles = true;
     
@@ -38,5 +40,6 @@ class BlogElement extends PolymerElement with ObservableMixin {
     });
              
   }
+
     
 }

@@ -1,7 +1,11 @@
 import 'dart:convert';
+import 'util.dart';
 import 'package:observe/observe.dart';
 
+// We have to implement manually class instance to JSON conversion since sadly it is not (yet) manage by Dart ... 
+
 class Blog {
+  
   @observable
   String title;
   
@@ -11,11 +15,20 @@ class Blog {
   Blog(this.title);
   
   Blog.fromJson(Map map) {
-    this.title = map['title'];
-    (map['posts'] as List).forEach((Map m) => this.posts.add(new Post.fromJson(m)));
+    title = map['title'];
+    // We convert a List of posts to a list of JSON Map representation of posts
+    map['posts'].forEach((Map m) => posts.add(new Post.fromJson(m)));
   }
   
-  Map toJson() => {'title': title, 'posts': posts};
+  Map toJson() {
+    List jsonPosts = new List();
+    posts.forEach((Post p) => jsonPosts.add(p.toJson()));
+    return {'title': title, 'posts': jsonPosts};
+  }
+  
+  bool operator ==(Blog other) {
+    return (other.title == title) && listsAreEqual(other.posts, posts);
+  }
 }
 
 class Post {
@@ -32,12 +45,17 @@ class Post {
   }
     
   Post.fromJson(Map map) {
-    this.title = map['title'];
-    this.content = map['content'];
-    this.author = new User.fromJson(map['author']);
+    title = map['title'];
+    content = map['content'];
+    created = DateTime.parse(map['created']);
+    author = new User.fromJson(map['author']);
   }
   
-  Map toJson() => {'title': title, 'content': content, 'created': created.toString(), 'author': author};
+  Map toJson() => {'title': title, 'content': content, 'created': created.toString(), 'author': author.toJson()};
+  
+  bool operator ==(Post other) {
+    return (other.title == title) && (other.content == content) && (other.created == created) && (other.author == author);
+  }
   
 }
 
@@ -48,15 +66,22 @@ class User {
   User(this.firstname, this.lastname);
    
   User.fromJson(Map map) {
-    this.firstname = map['firstname'];
-    this.lastname = map['lastname'];
+    firstname = map['firstname'];
+    lastname = map['lastname'];
   }
   
   String get name => "$firstname $lastname";
   
   Map toJson() => {'firstname': firstname, 'lastname': lastname};
+  
+  bool operator ==(User other) {
+    return (other.name == name);
+  }
 }
 
+/**
+ * Simple message intended to be use to transfer JSON over Websocket 
+ */
 class RpcMessage {
   
   static const GET_BLOG_REQUEST = "getBlogRequest";
