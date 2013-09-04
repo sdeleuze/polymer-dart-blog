@@ -10,7 +10,7 @@
           <h2>{{post.title}}</h2>
           <p>By {{post.author.name}} {{formatedCreatedDate}} </p>
           <p>{{post.content}}</p>
-          <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
+          <p><a class="btn btn-default" href="/post/{{post.id}}">View details &raquo;</a></p>
         </div>
       </template>
       <script type="application/dart" src="post.dart"></script>

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'util.dart';
 import 'package:observe/observe.dart';
 
@@ -32,12 +33,14 @@ class Blog {
 }
 
 class Post {
+  num id;
   String title;
   String content;
   DateTime created;
   User author;
   
   Post(String title, String content, User author) {
+    id = new Random().nextInt(1000000);
     created = new DateTime.now();
     this.title = title;
     this.content = content;
@@ -45,16 +48,17 @@ class Post {
   }
     
   Post.fromJson(Map map) {
+    id = map['id'];
     title = map['title'];
     content = map['content'];
     created = DateTime.parse(map['created']);
     author = new User.fromJson(map['author']);
   }
   
-  Map toJson() => {'title': title, 'content': content, 'created': created.toString(), 'author': author.toJson()};
+  Map toJson() => {'id': id, 'title': title, 'content': content, 'created': created.toString(), 'author': author.toJson()};
   
   bool operator ==(Post other) {
-    return (other.title == title) && (other.content == content) && (other.created == created) && (other.author == author);
+    return (other.id == id) && (other.title == title) && (other.content == content) && (other.created == created) && (other.author == author);
   }
   
 }
