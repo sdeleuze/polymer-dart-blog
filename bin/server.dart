@@ -18,10 +18,10 @@ void main() {
     });
 
     // We use Websocket for bidirectional data transfer between client and server
-    app.ws('/socket').listen((socket) {
+    app.ws('/socket').listen((Socket socket) {
       
       // Send the blog when requested
-      socket.on(RpcMessage.GET_BLOG_REQUEST, (data) {
+      socket.on(RpcMessage.GET_BLOG_REQUEST).listen((data) {
         _db.collection("blogs").find(where.sortBy('title')).forEach((jsonBlog) => socket.send(new RpcMessage(RpcMessage.GET_BLOG_RESPONSE, jsonBlog).toJsonString())); 
       });
       
