@@ -1,5 +1,5 @@
 import 'package:polymer/polymer.dart';
-import '../bin/model.dart';
+import '../lib/model.dart';
 import 'package:intl/intl.dart';
 
 @CustomTag("x-post")

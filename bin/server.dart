@@ -1,5 +1,5 @@
 import 'package:start/start.dart';
-import 'model.dart';
+import '../lib/model.dart';
 import 'dart:async';
 import 'package:mongo_dart/mongo_dart.dart';
 

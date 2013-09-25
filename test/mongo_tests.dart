@@ -1,6 +1,6 @@
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:unittest/unittest.dart';
-import '../bin/model.dart';
+import '../lib/model.dart';
 
 main() {
   

@@ -1,5 +1,5 @@
 import 'package:unittest/unittest.dart';
-import '../bin/model.dart';
+import '../lib/model.dart';
 
 main() {
   
