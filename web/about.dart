@@ -1,7 +1,7 @@
 import 'package:polymer/polymer.dart';
 
 @CustomTag("x-about")
-class AboutElement extends PolymerElement with ObservableMixin {
+class AboutElement extends PolymerElement {
         
   void created() {
     super.created();

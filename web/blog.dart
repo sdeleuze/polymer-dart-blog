@@ -5,7 +5,7 @@ import 'dart:html';
 
 
 @CustomTag("x-blog")
-class BlogElement extends PolymerElement with ObservableMixin {
+class BlogElement extends PolymerElement {
   
   @observable
   Blog blog = new Blog("Empty blog");

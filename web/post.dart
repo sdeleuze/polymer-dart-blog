@@ -3,7 +3,7 @@ import '../lib/model.dart';
 import 'package:intl/intl.dart';
 
 @CustomTag("x-post")
-class PostElement extends PolymerElement with ObservableMixin {
+class PostElement extends PolymerElement {
   
   @observable Post post;
   
@@ -17,7 +17,9 @@ class PostElement extends PolymerElement with ObservableMixin {
     root.applyAuthorStyles = true;
     
     // Update formatedCreatedDate when post is modified
-    bindProperty(this, const Symbol('post'), () => notifyProperty(this, const Symbol('formatedCreatedDate')));
+    // Does not work for the moment, need a setter ...
+    // bindProperty(#formatedCreatedDate, this, 'post');
+    new PathObserver(this, 'post').changes.listen((_) => notifyProperty(this, const Symbol('formatedCreatedDate')));
   }
  
   
