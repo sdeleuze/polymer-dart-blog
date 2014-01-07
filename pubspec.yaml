@@ -3,8 +3,7 @@ description: A simple blog prototype, with OrientDB as Backend
 dependencies:
   browser: any
   polymer: any
-  start:
-    git: https://github.com/lvivski/start.git
+  start: any
   http: any
   bootjack: any
   intl: any

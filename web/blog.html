@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="import" href="post.html">
+    <link rel="import" href="posts.html">
   </head>
   <body>   
     <polymer-element name="x-blog">
@@ -19,8 +19,18 @@
             </div>
             <div class="navbar-collapse collapse">
               <ul class="nav navbar-nav">
-                <li class="active"><a href="/index.html">Home</a></li>
-                <li><a href="/about">About</a></li>
+                <template if="{{mode == 'posts'}}">
+                  <li class="active"><a href="#">Home</a></li>
+                </template>
+                <template if="{{mode != 'posts'}}">
+                  <li><a href="#">Home</a></li>
+                </template>
+                <template if="{{mode == 'about'}}">
+                  <li class="active"><a href="#about">About</a></li>
+                </template>
+                <template if="{{mode != 'about'}}">
+                  <li><a href="#about">About</a></li>
+                </template>
               </ul>
               <form class="navbar-form navbar-right">
                 <div class="form-group">
@@ -44,11 +54,15 @@
           </div>
         </div>
       
+        
         <div class="container">
           <!-- Example row of columns -->
-          <div class="row">
-            <template repeat="{{post in blog.posts}}">
-               <x-post post="{{post}}"></x-post>
+          <div id="main">
+            <template if="{{ mode == 'about' }}">
+              <x-about></x-about>
+            </template>
+            <template if="{{ mode == 'posts' }}">
+              <x-posts posts="{{blog.posts}}"></x-posts>
             </template>
           </div>
       

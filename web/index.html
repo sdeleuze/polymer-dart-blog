@@ -9,14 +9,14 @@
     <link rel="stylesheet" href="blog.css">
     <link rel="import" href="blog.html">
     <link rel="import" href="about.html">
-    <script src='packages/polymer/boot.js'></script>
+    <script type="application/dart">export 'package:polymer/init.dart';</script>
+    <script src="packages/browser/dart.js"></script>
   </head>
   <body>
     
-    <div id="add-here"></div>
+    <div id="content">
+      <x-blog></x-blog>
+    </div>
     
-    <x-blog></x-blog>
-    
-    <script type="application/dart" src="router.dart"></script>
   </body>
 </html>

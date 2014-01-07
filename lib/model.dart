@@ -1,3 +1,5 @@
+library model;
+
 import 'dart:convert';
 import 'dart:math';
 import 'util.dart';

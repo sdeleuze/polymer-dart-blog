@@ -1,23 +1,38 @@
+library router;
+
 import 'dart:html';
-import 'package:polymer/polymer.dart';
-import 'package:route/client.dart';
+import 'blog.dart';
+import 'package:route/client.dart' as client;
 
-final homeUrl = new UrlPattern(r'/index.html');
-final postUrl = new UrlPattern(r'/post/(\d+)');
-final aboutUrl = new UrlPattern(r'/about');
+class Router {
 
-main() {
+  final homeUrl = new client.UrlPattern(r'(.*)index.html');
+  final postUrl = new client.UrlPattern(r'(.*)index.html#post/(\d+)');
+  final aboutUrl = new client.UrlPattern(r'(.*)index.html#about');
+  
+  BlogElement _blogElem;
+  client.Router _router;
+  
+  Router(BlogElement blogElem) {
+    _blogElem = blogElem;
+    _router = new client.Router(useFragment: true)
+    ..addHandler(homeUrl, showHome)
+    ..addHandler(postUrl, showPost)
+    ..addHandler(aboutUrl, showAbout)
+    ..listen(); 
+  }
+  
+  void showHome(String path) {
+    _blogElem.mode = 'posts';
+  }
+  
+  void showPost(String path) {
+    String post = postUrl.parse(path).last;
+    window.alert('Show post $post');
+  }
+  
+  void showAbout(String path) {
+    _blogElem.mode = 'about';
+  }
 
-  var router = new Router()
-      ..addHandler(homeUrl, showHome)
-      ..addHandler(aboutUrl, showAbout)
-      ..listen(); 
-}
-
-void showHome(String path) {
-  query('#add-here').innerHtml = "toto";
-}
-
-void showAbout(String path) {
-  query('#add-here').children.add(createElement('x-about'));
 }

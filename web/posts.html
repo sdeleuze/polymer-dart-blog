@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <link rel="import" href="post.html">
+  </head>
+ 
+  <body>
+    <polymer-element name="x-posts" attributes="posts">
+      <template>
+        <div class="row">
+          <template repeat="{{post in posts}}">
+             <x-post post="{{post}}"></x-post>
+          </template>
+        </div>
+      </template>
+      <script type="application/dart" src="posts.dart"></script>
+    </polymer-element> 
+  </body>
+</html>
+
+
+

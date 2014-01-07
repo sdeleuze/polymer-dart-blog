@@ -9,18 +9,16 @@ class PostElement extends PolymerElement {
   
   @observable String get formatedCreatedDate => (post != null) ? new DateFormat.yMd().format(post.created) : " empty post"; 
       
-  void created() {
-    super.created();
-    
-    // Use the global Bootstrap style
-    var root = getShadowRoot("x-post");
-    root.applyAuthorStyles = true;
+  PostElement.created():super.created() {
     
     // Update formatedCreatedDate when post is modified
     // Does not work for the moment, need a setter ...
-    // bindProperty(#formatedCreatedDate, this, 'post');
-    new PathObserver(this, 'post').changes.listen((_) => notifyProperty(this, const Symbol('formatedCreatedDate')));
+    onPropertyChange(this, #post, () {
+      notifyPropertyChange(#formatedCreatedDate, "", formatedCreatedDate);
+    });
   }
+  
+  bool get applyAuthorStyles => true;
  
   
 }

@@ -1,3 +1,5 @@
+library util;
+
 // No deep compare of 2 lists in Dart, so we implement it ...
 bool listsAreEqual(final List one, final List two) {
   var i = -1;

@@ -2,6 +2,7 @@ import 'package:polymer/polymer.dart';
 import '../lib/model.dart';
 import 'dart:async';
 import 'dart:html';
+import 'router.dart';
 
 
 @CustomTag("x-blog")
@@ -9,13 +10,11 @@ class BlogElement extends PolymerElement {
   
   @observable
   Blog blog = new Blog("Empty blog");
+  
+  @observable
+  String mode = '';
     
-  void created() {
-    super.created();
-    
-    // Use the global Bootstrap style
-    var root = getShadowRoot("x-blog");
-    root.applyAuthorStyles = true;
+  BlogElement.created():super.created() {
     
     WebSocket ws = new WebSocket("ws://localhost:3000/socket");
     
@@ -38,8 +37,11 @@ class BlogElement extends PolymerElement {
       print("connection opened");
       ws.send(RpcMessage.GET_BLOG_REQUEST);
     });
+    
+    new Router(this);
              
   }
-
+  
+  bool get applyAuthorStyles => true;
     
 }
